@@ -146,7 +146,7 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-// POST /login-request hg
+// POST /login-request
 app.post("/login-request", async (req, res) => {
   try {
     const { email } = req.body;
@@ -244,6 +244,8 @@ app.post('/notes', auth, async (req, res) => {
 
     const user = await User.findById(req.session.userId);
     const { Note_Title, Note_content } = req.body;
+    console.log(user);
+
     const newNote = await notes.create({
       userId: user._id,
       Note_Title,
@@ -251,6 +253,7 @@ app.post('/notes', auth, async (req, res) => {
     });
 
     req.session.notesId = newNote._id;
+     res.redirect('/notestable');
     res.redirect('/dashboard');
 
 
