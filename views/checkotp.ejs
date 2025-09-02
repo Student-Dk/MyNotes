@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        padding: 20px;
+    }
+
+    .header h2 {
+        font-size: 26px;
+        margin-bottom: 5px;
+    }
+
+    .header p {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .icon-container {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 2px solid #6a11cb;
+        background: #f0f7ff;
+        margin: 20px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-container i {
+        color: #6a11cb;
+        font-size: 30px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .instruction {
+        color: #555;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        margin-bottom: 15px;
+        border: 1.5px solid #ddd;
+        border-radius: 6px;
+        transition: border 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #6a11cb;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .resend {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #555;
+    }
+
+    .resend a {
+        color: #6a11cb;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .resend a:hover {
+        text-decoration: underline;
+    }
+
+    .countdown {
+        color: #6a11cb;
+        font-weight: 600;
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .footer {
+        background: #f9f9f9;
+        padding: 15px;
+        font-size: 13px;
+        border-top: 1px solid #eee;
+    }
+
+    .footer a {
+        color: #6a11cb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+        .header h2 { font-size: 22px; }
+        .icon-container { width: 60px; height: 60px; }
+        .icon-container i { font-size: 26px; }
+        input[type="text"] { font-size: 16px; padding: 10px; }
+        button { font-size: 14px; padding: 10px; }
+    }
+</style>
+
+</head>
+<body>
+      <form action="/verify-signup-otp" method="POST">
+                <input type="text" name="otp" placeholder="Enter OTP" required>
+                <button type="submit">Verify OTP</button>
+            </form>
+</body>
+</html>
