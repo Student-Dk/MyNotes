@@ -244,7 +244,7 @@ app.post('/notes', auth, async (req, res) => {
 
     const user = await User.findById(req.session.userId);
     const { Note_Title, Note_content } = req.body;
-    console.log(user);
+    
 
     const newNote = await notes.create({
       userId: user._id,
@@ -253,8 +253,7 @@ app.post('/notes', auth, async (req, res) => {
     });
 
     req.session.notesId = newNote._id;
-     res.redirect('/notestable');
-    res.redirect('/dashboard');
+    res.redirect('/notestable');
 
 
   } catch (err) {
