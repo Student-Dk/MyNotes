@@ -244,8 +244,6 @@ app.post('/notes', auth, async (req, res) => {
 
     const user = await User.findById(req.session.userId);
     const { Note_Title, Note_content } = req.body;
-    console.log(user);
-
     const newNote = await notes.create({
       userId: user._id,
       Note_Title,
