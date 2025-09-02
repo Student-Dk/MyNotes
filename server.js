@@ -146,7 +146,7 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-// POST /login-request
+// POST /login-request hg
 app.post("/login-request", async (req, res) => {
   try {
     const { email } = req.body;
