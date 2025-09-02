@@ -251,7 +251,7 @@ app.post('/notes', auth, async (req, res) => {
     });
 
     req.session.notesId = newNote._id;
-    res.redirect('/notestable');
+    res.redirect('/dashboard');
 
 
   } catch (err) {
