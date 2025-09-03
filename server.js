@@ -395,4 +395,6 @@ app.get("/logout", auth, (req, res) => {
   });
 });
 
-app.listen(4000, () => console.log("Server running on port 4000 "));
+const PORT = process.env.PORT || 4000; // fallback sirf local ke liye
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
