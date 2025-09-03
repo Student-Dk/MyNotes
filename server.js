@@ -11,6 +11,7 @@ const ejs = require("ejs");               // view engine (form render ke liye)
 const User = require("./models/user");
 const Otp = require("./models/otp");
 const notes = require("./models/notes");
+const { ConnectionPoolMonitoringEvent } = require("mongodb");
 
 
 app.use(express.json());
@@ -63,15 +64,21 @@ app.get("/reg", (req, res) => {
 // Registration + Send OTP
 app.post("/signup", async (req, res) => {
   try {
-    const { name, dob, email } = req.body;
+    const { name, dob, email,password } = req.body;
    
 
     let existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already registered" });
+      return res.status(400).send( "User already registered" );
     }
 
-    req.session.signupData = { name, dob, email };
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // create new user
+   
+
+    req.session.signupData = { name, dob, email, password:hashedPassword };
 
     const otp = generateOTP();
 
@@ -109,8 +116,8 @@ app.post("/verify-signup-otp", async (req, res) => {
     // Get signup data from session
     const signupData = req.session.signupData;
     if (!signupData) return res.status(400).send("Session expired. Please register again.");
-
-    const { name, dob, email } = signupData;
+  
+    const { name, dob, email, password } = signupData;
 
     // Check OTP in DB
     const validOtp = await Otp.findOne({ email, otp });
@@ -125,6 +132,7 @@ app.post("/verify-signup-otp", async (req, res) => {
       name,
       dob,
       email,
+      password,
       isVerified: true,
     });
 
@@ -133,7 +141,7 @@ app.post("/verify-signup-otp", async (req, res) => {
 
     // Clear session data
     req.session.signupData = null;
-    res.redirect('/login')
+    res.redirect('/Signin')
     // res.send("Registration successful! You can now login.");
   } catch (err) {
     console.log(err);
@@ -141,9 +149,44 @@ app.post("/verify-signup-otp", async (req, res) => {
   }
 });
 
+
+//-------------------------------------------------
+
+app.get("/Signin",(req,res)=>{
+  res.render('Signin');
+})
+
+app.post("/checkuser",async (req,res)=>{
+
+const { email, password } = req.body;
+
+    // check user exists
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).send( "User not found" );
+
+    // verify password
+    const isMatch = await bcrypt.compare(password, user.password);
+       if (!isMatch) return res.status(400).send("wrong email or password" );
+
+
+    req.session.userId = user._id;
+    req.session.email = user.email;
+
+     res.redirect('/dashboard');
+
+})
+
+
+
+
+
+
+//-----------------------------------------
+
+
 // Render login page
-app.get("/login", (req, res) => {
-  res.render("login");
+app.get("/verifyuser", (req, res) => {
+  res.render("verify");
 });
 
 // POST /login-request
@@ -205,7 +248,7 @@ app.post("/verify-login-otp", async (req, res) => {
     req.session.loginEmail = null;
 
     // res.send("Login successful! Session created.");
-    res.redirect('/dashboard');
+    res.redirect('/changepass');
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");
@@ -217,12 +260,47 @@ app.post("/verify-login-otp", async (req, res) => {
 const auth = (req, res, next) => {
   if (!req.session.userId) {
     // return res.status(401).json({ msg: "Not logged in" });
-    return res.redirect('/login');
+    return res.redirect('/Signin');
   }
   next();
 };
 
 // ================= Protected Route =================
+
+app.get("/changepass", auth, async(req,res)=>{
+ res.render('change');
+})
+
+app.post("/setpass",async(req,res)=>{
+  try{
+
+   const {password,cpassword}=req.body;
+   if(password!=cpassword) return  res.status(500).send(" password not match enter correct password ");
+
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+   
+      await User.findByIdAndUpdate( req.session.userId, { password:hashedPassword });
+      res.redirect('/Signin');
+
+    // create new user
+   
+
+   
+
+
+  }catch(err){
+    res.status(500).json({ error: err.message });
+  }
+})
+
+
+
+
+
+//---------------------
+
+
 
 
 app.get("/dashboard", auth, async (req, res) => {

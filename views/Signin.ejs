@@ -43,7 +43,7 @@
       color: #555;
   }
 
-  input[type="email"] {
+  input {
       width: 100%;
       padding: 12px;
       margin-bottom: 15px;
@@ -102,13 +102,23 @@
     <div class="container">
     <h2>Sign in</h2>
     <p>Sign in to enjoy the feature of HD</p>
-  <form action="/login-request" method="post">
-  <input type="email" name="email" required />
+  <form action="/checkuser" method="post">
+  <input type="email" name="email" placeholder="enter your email" required />
+  <input type="password" name="password" placeholder="enter your password" required>
   <button type="submit">Login</button>
+  
+ 
+  
 </form>
+
 
     <div class="footer">
       Create new account? <a href="/reg">Sign up</a>
+      
+
+    </div>
+    <div class="footer">
+          <a href="/verifyuser">Forgot password</a>
     </div>
   </div>
 </body>

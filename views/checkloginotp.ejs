@@ -155,8 +155,6 @@
     </div>
 
     <div class="form-container">
-      <!-- Error message (dynamic) -->
-      <!-- <div class="error">❌ Invalid or expired OTP</div> -->
 
       <form action="/verify-login-otp" method="POST">
         <input type="text" name="otp" placeholder="Enter OTP" maxlength="6" required>
@@ -165,7 +163,7 @@
 
       <div class="resend">
         Didn’t receive OTP? <a href="/login">Resend</a>
-        <div class="countdown" id="countdown">00:30</div>
+        <div class="countdown" id="countdown">00:60</div>
       </div>
     </div>
     <% if (typeof error !== "undefined") { %>
@@ -173,13 +171,13 @@
   <% } %>
 
     <div class="footer">
-      Back to <a href="/login">Login</a>
+      Back to <a href="/Signin">Login</a>
     </div>
   </div>
 
   <script>
     // Countdown timer for Resend OTP
-    let seconds = 30;
+    let seconds = 60;
     const countdownEl = document.getElementById("countdown");
 
     const timer = setInterval(() => {

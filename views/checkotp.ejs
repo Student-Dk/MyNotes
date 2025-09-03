@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-
-        
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify OTP</title>
+  <style>
     * {
         margin: 0;
         padding: 0;
@@ -40,30 +38,13 @@
     }
 
     .header h2 {
-        font-size: 26px;
+        font-size: 24px;
         margin-bottom: 5px;
     }
 
     .header p {
         font-size: 14px;
         opacity: 0.9;
-    }
-
-    .icon-container {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        border: 2px solid #6a11cb;
-        background: #f0f7ff;
-        margin: 20px auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .icon-container i {
-        color: #6a11cb;
-        font-size: 30px;
     }
 
     .form-container {
@@ -84,6 +65,8 @@
         border: 1.5px solid #ddd;
         border-radius: 6px;
         transition: border 0.3s;
+        text-align: center;
+        letter-spacing: 3px;
     }
 
     input[type="text"]:focus {
@@ -147,20 +130,65 @@
         text-decoration: underline;
     }
 
+    .error {
+        background: #ffe5e5;
+        color: #d9534f;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        border: 1px solid #d9534f;
+    }
+
     @media (max-width: 480px) {
         .header h2 { font-size: 22px; }
-        .icon-container { width: 60px; height: 60px; }
-        .icon-container i { font-size: 26px; }
         input[type="text"] { font-size: 16px; padding: 10px; }
         button { font-size: 14px; padding: 10px; }
     }
-</style>
-
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="header">
+      <h2>OTP Verification</h2>
+      <p>Enter the OTP sent to your email</p>
+    </div>
+
+    <div class="form-container">
+      <!-- Error message (dynamic) -->
+      <!-- <div class="error">❌ Invalid or expired OTP</div> -->
+
       <form action="/verify-signup-otp" method="POST">
-                <input type="text" name="otp" placeholder="Enter OTP" required>
-                <button type="submit">Verify OTP</button>
-            </form>
+        <input type="text" name="otp" placeholder="Enter OTP" maxlength="6" required>
+        <button type="submit">Verify & Register</button>
+      </form>
+
+      <div class="resend">
+        Didn’t receive OTP? <a href="/reg">Resend</a>
+        <div class="countdown" id="countdown">00:60</div>
+      </div>
+    </div>
+    <% if (typeof error !== "undefined") { %>
+    <p style="color: red; margin-top: 10px;"><%= error %></p>
+  <% } %>
+
+   
+  </div>
+
+  <script>
+    // Countdown timer for Resend OTP
+    let seconds = 60;
+    const countdownEl = document.getElementById("countdown");
+
+    const timer = setInterval(() => {
+      seconds--;
+      countdownEl.textContent = `00:${seconds < 10 ? "0" + seconds : seconds}`;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        countdownEl.textContent = "You can resend now!";
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
+

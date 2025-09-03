@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +13,14 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: #333;
             display: flex;
             min-height: 100vh;
         }
-        
+
         /* Sidebar */
         .sidebar {
             width: 250px;
@@ -30,70 +31,70 @@
             position: fixed;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .logo {
             text-align: center;
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
         }
-        
+
         .logo h1 {
             font-size: 24px;
             font-weight: 600;
         }
-        
+
         .menu {
             list-style: none;
             padding: 0 20px;
         }
-        
+
         .menu li {
             margin-bottom: 10px;
             padding: 12px 15px;
             border-radius: 8px;
             transition: all 0.3s;
         }
-        
+
         .menu li.active {
             background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .menu li:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .menu a {
             color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
         }
-        
+
         .menu i {
             margin-right: 10px;
             font-size: 18px;
         }
-        
+
         /* Main Content */
         .main-content {
             flex: 1;
             margin-left: 250px;
             padding: 30px;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
         }
-        
+
         .user-info {
             display: flex;
             align-items: center;
         }
-        
+
         .user-avatar {
             width: 50px;
             height: 50px;
@@ -107,12 +108,12 @@
             font-size: 20px;
             margin-right: 15px;
         }
-        
+
         .time {
             font-size: 14px;
             color: #777;
         }
-        
+
         /* Welcome Card */
         .welcome-card {
             background: white;
@@ -121,18 +122,18 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
         }
-        
+
         .welcome-card h2 {
             color: #333;
             margin-bottom: 10px;
             font-weight: 600;
         }
-        
+
         .welcome-card p {
             color: #777;
             line-height: 1.6;
         }
-        
+
         /* Notes Section */
         .notes-section {
             background: white;
@@ -141,19 +142,19 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
         }
-        
+
         .notes-section h3 {
             margin-bottom: 20px;
             color: #333;
             font-weight: 600;
         }
-        
+
         .notes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
-        
+
         .note-card {
             background: #f9f9f9;
             border-radius: 10px;
@@ -162,18 +163,18 @@
             transition: all 0.3s;
             position: relative;
         }
-        
+
         .note-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .note-card h4 {
             margin-bottom: 10px;
             color: #333;
             padding-right: 60px;
         }
-        
+
         .note-card p {
             color: #666;
             font-size: 14px;
@@ -182,13 +183,13 @@
             max-height: 100px;
             overflow: hidden;
         }
-        
+
         .note-date {
             font-size: 12px;
             color: #999;
             margin-top: 15px;
         }
-        
+
         .note-actions {
             position: absolute;
             top: 15px;
@@ -196,7 +197,7 @@
             display: flex;
             gap: 10px;
         }
-        
+
         .btn {
             padding: 6px 12px;
             border-radius: 6px;
@@ -206,22 +207,22 @@
             border: none;
             font-size: 13px;
         }
-        
+
         .btn-edit {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
         }
-        
+
         .btn-delete {
             background: #ff4757;
             color: white;
         }
-        
+
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
         }
-        
+
         /* Create Note */
         .create-note {
             background: white;
@@ -230,7 +231,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
         }
-        
+
         .note-form input,
         .note-form textarea {
             width: 100%;
@@ -240,12 +241,12 @@
             border-radius: 8px;
             font-size: 15px;
         }
-        
+
         .note-form textarea {
             min-height: 120px;
             resize: vertical;
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
@@ -256,66 +257,98 @@
             font-weight: 600;
             transition: all 0.3s;
         }
-        
+
         .btn-primary:hover {
             opacity: 0.9;
             transform: translateY(-2px);
         }
-        
+
+       /* Logout button as real button look */
+.logout-btn {
+    margin: 20px;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #474dff;   /* red background */
+    color: white;          /* white text */
+    border: none;
+}
+
+/* Hover effect */
+.logout-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* By default hide in desktop */
+
+/* Mobile view me show karo */
+@media (max-width: 576px) {
+    .logout-mobile {
+        display: inline-block;
+    }
+}
+
         /* Responsive */
         @media (max-width: 992px) {
             .sidebar {
                 width: 200px;
             }
-            
+
             .main-content {
                 margin-left: 200px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
             }
-            
+
             .sidebar .logo h1,
             .sidebar .menu span {
                 display: none;
             }
-            
+
             .sidebar .menu i {
                 margin-right: 0;
                 font-size: 20px;
             }
-            
+
             .main-content {
                 margin-left: 70px;
                 padding: 20px;
             }
-            
+
             .notes-grid {
                 grid-template-columns: 1fr;
             }
         }
-        
+
         @media (max-width: 576px) {
             .sidebar {
                 display: none;
             }
-            
+
             .main-content {
                 margin-left: 0;
             }
-            
+
             .header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .time {
                 margin-top: 10px;
             }
-            
+
             .note-actions {
                 position: static;
                 margin-top: 15px;
@@ -324,13 +357,14 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">
             <h1>NotesApp</h1>
         </div>
-        
+
         <ul class="menu">
             <li class="active">
                 <a href="/dashboard">
@@ -358,30 +392,34 @@
             </li>
         </ul>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
         <div class="header">
             <div class="user-info">
-                <div class="user-avatar">J</div>
+                <div class="user-avatar">
+                    <%= user.name.charAt(0) %>
+                </div>
                 <div>
-                    <h2>Welcome, <%=user.name%></h2>
-                    <p>Email: <%=user.email%></p>
+                    <h2>Welcome, <%=user.name%>
+                    </h2>
+                    <p>Email: <%=user.email%>
+                    </p>
                 </div>
             </div>
-            <div class="time">
-                <p id="current-time">9:41 AM</p>
-                <p id="current-date">August 31, 2025</p>
-            </div>
+           
+           <a href="/logout" class="logout-btn logout-mobile">Logout</a>
+
         </div>
-        
+
         <!-- Welcome Card -->
         <div class="welcome-card">
             <h2>Dashboard Overview</h2>
-            <p>Welcome back! Here you can manage your notes, create new ones, and organize your thoughts. You currently have <%= userNotes.length %> notes saved.</p>
+            <p>Welcome back! Here you can manage your notes, create new ones, and organize your thoughts. You currently
+                have <%= userNotes.length %> notes saved.</p>
         </div>
-        
+
         <!-- Create Note Section -->
         <div class="create-note">
             <h3>Create New Note</h3>
@@ -391,58 +429,49 @@
                 <button type="submit" class="btn-primary">Save Note</button>
             </form>
         </div>
-        
+
         <!-- Notes Section -->
         <div class="notes-section">
             <h3>Your Notes</h3>
-            
-            <% if (userNotes.length === 0) { %>
-                <p>You don't have any notes yet. Create your first note above!</p>
-            <% } else { %>
-                <div class="notes-grid">
-                    <% userNotes.forEach(note => { %>
-                        <div class="note-card">
-                            <div class="note-actions">
-                                <form action="/edit" method="post" style="display:inline;">
-                                    <input type="hidden" name="notesid" value="<%=note._id%>">
-                                    <button type="submit" class="btn btn-edit">Edit</button>
-                                </form>
-                                <form action="/delete" method="post" style="display:inline;">
-                                    <input type="hidden" name="notesid" value="<%=note._id%>">
-                                    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this note?')">Delete</button>
-                                </form>
-                            </div>
-                            <h4><%= note.Note_Title %></h4>
-                            <p><%= note.Note_content %></p>
-                            <div class="note-date">
-                                Created: <%= new Date(note.createdAt).toLocaleDateString('en-US', { 
-                                    year: 'numeric', 
-                                     month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-    timeZone: 'Asia/Kolkata'  
-                                }) %>
-                            </div>
-                            <div class="note-date">
-    Last Updated: <%= new Date(note.updatedAt).toLocaleString('en-US', { 
-        year: 'numeric', 
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-        timeZone: 'Asia/Kolkata'
-    }) %>
-</div>
 
-                        </div>
-                    <% }); %>
-                </div>
-            <% } %>
+            <% if (userNotes.length===0) { %>
+                <p>You don't have any notes yet. Create your first note above!</p>
+                <% } else { %>
+                    <div class="notes-grid">
+                        <% userNotes.forEach(note=> { %>
+                            <div class="note-card">
+                                <div class="note-actions">
+                                    <form action="/edit" method="post" style="display:inline;">
+                                        <input type="hidden" name="notesid" value="<%=note._id%>">
+                                        <button type="submit" class="btn btn-edit">Edit</button>
+                                    </form>
+                                    <form action="/delete" method="post" style="display:inline;">
+                                        <input type="hidden" name="notesid" value="<%=note._id%>">
+                                        <button type="submit" class="btn btn-delete"
+                                            onclick="return confirm('Are you sure you want to delete this note?')">Delete</button>
+                                    </form>
+                                </div>
+                                <h4>
+                                    <%= note.Note_Title %>
+                                </h4>
+                                <p>
+                                    <%= note.Note_content %>
+                                </p>
+                                <div class="note-date">
+                                    Created: <%= new Date(note.createdAt).toLocaleDateString('en-US', { year: 'numeric'
+                                        , month: 'long' , day: 'numeric' , hour: '2-digit' , minute: '2-digit' ,
+                                        second: '2-digit' , hour12: true, timeZone: 'Asia/Kolkata' }) %>
+                                </div>
+                                <div class="note-date">
+                                    Last Updated: <%= new Date(note.updatedAt).toLocaleString('en-US', { year: 'numeric'
+                                        , month: 'long' , day: 'numeric' , hour: '2-digit' , minute: '2-digit' ,
+                                        second: '2-digit' , hour12: true, timeZone: 'Asia/Kolkata' }) %>
+                                </div>
+
+                            </div>
+                            <% }); %>
+                    </div>
+                    <% } %>
         </div>
     </div>
 
@@ -452,7 +481,7 @@
             const now = new Date();
             const timeElement = document.getElementById('current-time');
             const dateElement = document.getElementById('current-date');
-            
+
             // Format time
             let hours = now.getHours();
             let minutes = now.getMinutes();
@@ -461,18 +490,19 @@
             hours = hours ? hours : 12;
             minutes = minutes < 10 ? '0' + minutes : minutes;
             const timeString = hours + ':' + minutes + ' ' + ampm;
-            
+
             // Format date
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateString = now.toLocaleDateString('en-US', options);
-            
+
             timeElement.textContent = timeString;
             dateElement.textContent = dateString;
         }
-        
+
         // Update time initially and then every minute
         updateDateTime();
         setInterval(updateDateTime, 60000);
     </script>
 </body>
+
 </html>
