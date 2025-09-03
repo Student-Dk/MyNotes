@@ -440,22 +440,12 @@
                     <div class="notes-grid">
                         <% userNotes.forEach(note=> { %>
                             <div class="note-card">
-                                <div class="note-actions">
-                                    <form action="/edit" method="post" style="display:inline;">
-                                        <input type="hidden" name="notesid" value="<%=note._id%>">
-                                        <button type="submit" class="btn btn-edit">Edit</button>
-                                    </form>
-                                    <form action="/delete" method="post" style="display:inline;">
-                                        <input type="hidden" name="notesid" value="<%=note._id%>">
-                                        <button type="submit" class="btn btn-delete"
-                                            onclick="return confirm('Are you sure you want to delete this note?')">Delete</button>
-                                    </form>
-                                </div>
+                                
                                 <h4>
                                     <%= note.Note_Title %>
                                 </h4>
                                 <p>
-                                    <%= note.Note_content %>
+                                 <%= note.Note_content.split(" ").slice(0, 15).join(" ") %>...
                                 </p>
                                 <div class="note-date">
                                     Created: <%= new Date(note.createdAt).toLocaleDateString('en-US', { year: 'numeric'
@@ -466,6 +456,19 @@
                                     Last Updated: <%= new Date(note.updatedAt).toLocaleString('en-US', { year: 'numeric'
                                         , month: 'long' , day: 'numeric' , hour: '2-digit' , minute: '2-digit' ,
                                         second: '2-digit' , hour12: true, timeZone: 'Asia/Kolkata' }) %>
+                                </div>
+
+
+                                <div class="note-actions">
+                                    <form action="/edit" method="post" style="display:inline;">
+                                        <input type="hidden" name="notesid" value="<%=note._id%>">
+                                        <button type="submit" class="btn btn-edit">Edit</button>
+                                    </form>
+                                    <form action="/delete" method="post" style="display:inline;">
+                                        <input type="hidden" name="notesid" value="<%=note._id%>">
+                                        <button type="submit" class="btn btn-delete"
+                                            onclick="return confirm('Are you sure you want to delete this note?')">Delete</button>
+                                    </form>
                                 </div>
 
                             </div>
