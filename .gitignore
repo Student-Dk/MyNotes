@@ -36,3 +36,5 @@ coverage/
 # IDE settings
 .vscode/
 .idea/
+
+tempCodeRunnerFile.js
