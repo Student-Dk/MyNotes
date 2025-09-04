@@ -1,13 +1,13 @@
-const express = require("express");       // server framework
+const express = require("express");       
 const app = express();
-const mongoose = require("mongoose");     // MongoDB connection
-const bcrypt = require("bcrypt");         // password hashing
-const session = require("express-session"); // session management
-const nodemailer = require("nodemailer"); // send email
-require("dotenv").config();               // .env file load
-const ejs = require("ejs");               // view engine (form render ke liye)
+const mongoose = require("mongoose");     
+const bcrypt = require("bcrypt");         
+const session = require("express-session"); 
+const nodemailer = require("nodemailer"); 
+require("dotenv").config();               
+const ejs = require("ejs");               
 
-// apke khud ke models
+
 const User = require("./models/user");
 const Otp = require("./models/otp");
 const notes = require("./models/notes");
@@ -51,9 +51,7 @@ function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
 }
 
-// ================= Routes =================
 
-// Render registration page
 app.get('/home', (req, res) => {
   res.render('home');
 })
@@ -65,23 +63,14 @@ app.get("/reg", (req, res) => {
 app.post("/signup", async (req, res) => {
   try {
     const { name, dob, email,password } = req.body;
-   
-
     let existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).send( "User already registered" );
     }
-
     // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // create new user
-   
-
     req.session.signupData = { name, dob, email, password:hashedPassword };
-
     const otp = generateOTP();
-
     // Save OTP in DB (expire after 5 minutes)
     await Otp.create({ email, otp, createdAt: new Date() });
 
@@ -104,11 +93,11 @@ app.post("/signup", async (req, res) => {
 app.get("/verifyemail", (req, res) => {
   // Get user data from session
   const signupData = req.session.signupData;
-  if (!signupData) return res.redirect("/reg"); // no data → go back to registration
+  if (!signupData) return res.redirect("/reg"); // 
   res.render("checkotp", { email: signupData.email });
 });
 
-// POST /verify-signup-otp
+
 app.post("/verify-signup-otp", async (req, res) => {
   try {
     const { otp } = req.body;
@@ -178,43 +167,27 @@ const { email, password } = req.body;
 
 
 
-
-
-
-//-----------------------------------------
-
-
-// Render login page
 app.get("/verifyuser", (req, res) => {
   res.render("verify");
 });
 
-// POST /login-request
+
 app.post("/login-request", async (req, res) => {
   try {
     const { email } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).send("User not registered");
-
-    // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    // Save OTP in DB (5 min expiry)
     await Otp.create({ email, otp, createdAt: new Date() });
-
-    // Send OTP via email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Login OTP",
       text: `Your login OTP is ${otp}. It expires in 5 minutes.`,
     });
-
-    // Optionally, store email in session for OTP verification
     req.session.loginEmail = email;
     res.render('checkloginotp');
-    // res.send("OTP sent to your email.");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");
@@ -222,32 +195,20 @@ app.post("/login-request", async (req, res) => {
 });
 
 
-// POST /verify-login-otp
+
 app.post("/verify-login-otp", async (req, res) => {
   try {
     const { otp } = req.body;
     const email = req.session.loginEmail;
     if (!email) return res.status(400).send("Session expired. Try login again.");
-
-    // Check OTP in DB
     const validOtp = await Otp.findOne({ email, otp });
     if (!validOtp) return res.status(400).send("Invalid or expired OTP");
-
-    // Get user
     const user = await User.findOne({ email });
     if (!user) return res.status(400).send("User not found");
-
-    // Create session
     req.session.userId = user._id;
     req.session.email = user.email;
-
-    // Delete OTP after use
     await Otp.deleteMany({ email });
-
-    // Clear loginEmail session
     req.session.loginEmail = null;
-
-    // res.send("Login successful! Session created.");
     res.redirect('/changepass');
   } catch (err) {
     console.log(err);
@@ -256,16 +217,14 @@ app.post("/verify-login-otp", async (req, res) => {
 });
 
 
-// ================= Middleware =================
 const auth = (req, res, next) => {
   if (!req.session.userId) {
-    // return res.status(401).json({ msg: "Not logged in" });
     return res.redirect('/home');
   }
   next();
 };
 
-// ================= Protected Route =================
+
 
 app.get("/changepass", auth, async(req,res)=>{
  res.render('change');
@@ -276,14 +235,9 @@ app.post("/setpass",async(req,res)=>{
 
    const {password,cpassword}=req.body;
    if(password!=cpassword) return  res.status(500).send(" password not match enter correct password ");
-
-    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-   
       await User.findByIdAndUpdate( req.session.userId, { password:hashedPassword });
       res.redirect('/Signin');
-
-    // create new user
    
 
    
@@ -298,16 +252,10 @@ app.post("/setpass",async(req,res)=>{
 
 
 
-//---------------------
-
-
-
-
 app.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId).select("-password");
     if (!user) return res.status(404).json({ msg: "User not found" });
-    // res.json(user);
     const userNotes = await notes.find({ userId: user._id }).sort({ createdAt: -1 });
     res.render('dashboard', { user, userNotes });
   } catch (err) {
@@ -359,19 +307,17 @@ app.post('/update', auth, async (req, res) => {
   try {
     const { Note_Title, Note_content, notesid } = req.body;
     const userId = req.session.userId;
-
-    // Sirf wahi note update ho jo current user ka hai
     const updatedNote = await notes.findOneAndUpdate( 
-      { _id: notesid, userId },  // condition: noteId + owner check
+      { _id: notesid, userId },  
       { Note_Title, Note_content },
-      { new: true } // updated document return karega
+      { new: true } 
     );
 
     if (!updatedNote) {
       return res.status(404).send("Note not found or you don't have permission to edit");
     }
 
-    res.redirect('/notestable'); // update ke baad redirect
+    res.redirect('/notestable');
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -395,6 +341,6 @@ app.get("/logout", auth, (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 4000; // fallback sirf local ke liye
+const PORT = process.env.PORT || 4000; 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
