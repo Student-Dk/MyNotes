@@ -54,7 +54,7 @@ function generateOTP() {
 // ================= Routes =================
 
 // Render registration page
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
   res.render('home');
 })
 app.get("/reg", (req, res) => {
@@ -172,7 +172,7 @@ const { email, password } = req.body;
     req.session.userId = user._id;
     req.session.email = user.email;
 
-     res.redirect('/dashboard');
+     res.redirect('/');
 
 })
 
@@ -260,7 +260,7 @@ app.post("/verify-login-otp", async (req, res) => {
 const auth = (req, res, next) => {
   if (!req.session.userId) {
     // return res.status(401).json({ msg: "Not logged in" });
-    return res.redirect('/Signin');
+    return res.redirect('/home');
   }
   next();
 };
@@ -303,7 +303,7 @@ app.post("/setpass",async(req,res)=>{
 
 
 
-app.get("/dashboard", auth, async (req, res) => {
+app.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId).select("-password");
     if (!user) return res.status(404).json({ msg: "User not found" });
